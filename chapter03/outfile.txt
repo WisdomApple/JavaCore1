@@ -1,0 +1,4 @@
+要想对文件进行读取， 就需要一个用 RWFile 对象构造一个 Scanner 对象， 如下所示：
+Scanner in = new Scanner(Paths.get("myfile.txt") , "UTF-8") ;
+如果文件名中包含反斜杠符号，就要记住在每个反斜杠之前再加一个额外的反斜杠
+D:\android studio\CoreJavaVolumeI\lib\src\main\java\com\chapter03\outfile.txt

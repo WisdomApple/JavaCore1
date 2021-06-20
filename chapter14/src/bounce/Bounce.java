@@ -1,0 +1,69 @@
+package bounce;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionListener;
+
+/**
+ * Shows an animated bouncing ball.
+ *
+ * @author Cay Horstmann
+ * @version 1.34 2015-06-21
+ */
+public class Bounce {
+    public static void main(String[] args) {
+        EventQueue.invokeLater(() -> {
+            JFrame frame = new BounceFrame();
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setVisible(true);
+        });
+    }
+}
+
+/**
+ * The frame with ball component and buttons.
+ */
+class BounceFrame extends JFrame {
+    public static final int STEPS = 1000;
+    public static final int DELAY = 3;
+    private BallComponent comp;
+
+    /**
+     * Constructs the frame with the component for showing the bouncing ball and
+     * Start and Close buttons
+     */
+    public BounceFrame() {
+        setTitle("Bounce");
+        comp = new BallComponent();
+        add(comp, BorderLayout.CENTER);
+        JPanel buttonPanel = new JPanel();
+        addButton(buttonPanel, "Start", e -> addBall());
+        addButton(buttonPanel, "Close", e -> System.exit(0));
+        add(buttonPanel, BorderLayout.SOUTH);
+        pack();
+    }
+
+
+    public void addButton(Container container, String title, ActionListener listener) {
+        JButton button = new JButton(title);
+        container.add(button);
+        button.addActionListener(listener);
+    }
+
+    /**
+     * Adds a bouncing ball to the panel and makes it bounce 1,000 times.
+     */
+    private void addBall() {
+        try {
+            Ball ball = new Ball();
+            comp.add(ball);
+
+            for (int i = 1; i <= STEPS; i++) {
+                ball.move(comp.getBounds());
+                comp.paint(comp.getGraphics());
+                Thread.sleep(DELAY);
+            }
+        } catch (InterruptedException ignored) {
+        }
+    }
+}
